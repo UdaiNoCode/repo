@@ -1,1 +1,24 @@
+name: Lab Check
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format cmake g++ python3 python3-pip
+          pip install requests
+      - name: Run check script
+        run: |
+          chmod +x check.sh
+          ./check.sh
